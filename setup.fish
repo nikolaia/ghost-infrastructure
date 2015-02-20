@@ -13,9 +13,6 @@ docker run --name stasj-mysql \
 
 docker run --name stasj \
 --link stasj-mysql:mysql \
--e MYSQL_USER=$MYSQL_USER \
--e MYSQL_PASSWORD=$MYSQL_PASSWORD \
--e MYSQL_DATABASE=$MYSQL_DATABASE \
 -e HOSTING_URI=$HOSTING_URI \
 -v (pwd)/ghost:/ghost-override \
 -p 80:2368 -d dockerfile/ghost
