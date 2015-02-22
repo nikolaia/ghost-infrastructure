@@ -4,15 +4,15 @@ var path = require('path'),
 config = {
 
     production: {
-        url: process.env['HOSTING_URI'],
+        url: "http://"+process.env['VIRTUAL_HOST'],
         mail: {},
         database: {
             client: 'mysql',
             connection: {
-                host: process.env['MYSQL_PORT'],
-                user: process.env['MYSQL_ENV_MYSQL_USER'],
-                password: process.env['MYSQL_ENV_MYSQL_PASSWORD'],
-                database: process.env['MYSQL_ENV_MYSQL_DATABASE'],
+                host: process.env['DB_PORT_3306_TCP_ADDR'],
+                user: process.env['DB_ENV_MYSQL_USER'],
+                password: process.env['DB_ENV_MYSQL_PASSWORD'],
+                database: process.env['DB_ENV_MYSQL_DATABASE'],
                 charset: 'utf8'
             },
              debug: true

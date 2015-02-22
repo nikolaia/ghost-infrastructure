@@ -1,0 +1,20 @@
+Vagrant.configure("2") do |vagrant|
+
+  vagrant.vm.define "nna-docker-ghost" do |config|
+
+    config.vm.box = "mitchellh/boot2docker"
+
+    config.vm.provider "virtualbox" do |v|
+      v.name = "nna-docker-ghost"
+      v.memory = 1024
+      v.cpus = 2
+      v.check_guest_additions = false
+      v.functional_vboxsf     = false
+    end
+
+    config.nfs.functional = false
+
+    config.vm.network "forwarded_port", guest: 80, host: 8080
+
+  end
+end

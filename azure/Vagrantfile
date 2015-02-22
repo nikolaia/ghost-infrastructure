@@ -1,0 +1,32 @@
+VAGRANT_ROOT = File.dirname(__FILE__)
+
+Vagrant.configure("2") do |config|
+
+  config.vm.box = 'azure'
+
+  config.vm.provider :azure do |azure|
+    azure.mgmt_certificate = 'YOUR AZURE MANAGEMENT CERTIFICATE'
+    azure.mgmt_endpoint = 'https://management.core.windows.net'
+    azure.subscription_id = 'YOUR AZURE SUBSCRIPTION ID'
+    azure.storage_acct_name = 'NAME OF YOUR STORAGE ACCOUNT' # optional. A new one will be generated if not provided.
+
+    azure.vm_image = 'NAME OF THE IMAGE TO USE'
+    azure.vm_user = 'PROVIDE A USERNAME' # defaults to 'vagrant' if not provided
+    azure.vm_password = 'PROVIDE A VALID PASSWORD' # min 8 characters. should contain a lower case letter, an uppercase letter, a number and a special character
+
+    azure.vm_name = 'nna-docker-ghost' # max 15 characters. contains letters, number and hyphens. can start with letters and can end with letters and numbers
+    azure.cloud_service_name = 'nna-docker-ghost' # same as vm_name. leave blank to auto-generate
+    azure.deployment_name = 'nna-docker-ghost' # defaults to cloud_service_name
+    azure.vm_location = 'PROVIDE A LOCATION FOR VM' # e.g., West US
+    azure.private_key_file = 'PATH TO YOUR KEY FILE'
+    azure.certificate_file = 'PATH TO YOUR CERTIFICATE FILE'
+
+    # Provide the following values if creating a *Nix VM
+    azure.ssh_port = '22'
+
+    azure.tcp_endpoints = '80:80'     # HTTP
+    azure.tcp_endpoints = '443:443'   # HTTPS
+    azure.tcp_endpoints = '2375:2375' # Docker
+  end
+
+end
