@@ -1,0 +1,23 @@
+nginx:
+  links:
+  - ghost:app
+  ports:
+  - "80:80"
+  image: dockerfile/nginx
+  volumes:
+  - nginx/sites-enabled:/etc/nginx/sites-enabled
+mysql:
+  image: mysql
+  environment:
+    MYSQL_USER: "root"
+    MYSQL_PASSWORD: "supersecret"
+    MYSQL_DATABASE: "ghost"
+    MYSQL_ROOT_PASSWORD: "supersecret"
+ghost:
+  links:
+  - mysql:db
+  image: dockerfile/ghost
+  volumes:
+  - ghost:/ghost-override
+  environment:
+    VIRTUAL_HOST: "b2d.dev"
