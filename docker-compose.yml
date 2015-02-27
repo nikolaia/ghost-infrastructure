@@ -1,23 +1,35 @@
-nginx:
-  links:
-  - ghost:app
-  ports:
-  - "80:80"
-  image: dockerfile/nginx
-  volumes:
-  - nginx/sites-enabled:/etc/nginx/sites-enabled
 mysql:
-  image: mysql
-  environment:
-    MYSQL_USER: "root"
-    MYSQL_PASSWORD: "supersecret"
-    MYSQL_DATABASE: "ghost"
-    MYSQL_ROOT_PASSWORD: "supersecret"
+    image: mysql
+    environment:
+        MYSQL_USER: "ghost"
+        MYSQL_PASSWORD: "password"
+        MYSQL_DATABASE: "ghost"
+        MYSQL_ROOT_PASSWORD: "supersecret"
 ghost:
-  links:
-  - mysql:db
-  image: dockerfile/ghost
-  volumes:
-  - ghost:/ghost-override
-  environment:
-    VIRTUAL_HOST: "b2d.dev"
+    links:
+    - haproxy:db
+    image: dockerfile/ghost
+    volumes:
+    - ghost:/ghost-override
+    environment:
+        VIRTUAL_HOST: "b2d.dev"
+nginx:
+    links:
+    - ghost:app
+    ports:
+    - "80:80"
+    image: dockerfile/nginx
+    volumes:
+    - nginx/sites-enabled:/etc/nginx/sites-enabled
+haproxy:
+    image: dockerfile/haproxy
+    ports:
+    - "3306:3306"
+    volumes:
+    - haproxy:/haproxy-override/
+    links:
+    - mysql:db
+    environment:
+        MYSQL_USER: "ghost"
+        MYSQL_PASSWORD: "password"
+        MYSQL_DATABASE: "ghost"
