@@ -15,4 +15,5 @@ Fix the VIRTUAL_HOST in ```docker-compose.yml``` and ```server_name``` in ```ngi
 
 ## Work in progress
 
-The host in the .yml file and in the nginx-config should be generated automaticly.
+* The host in the .yml file and in the nginx-config should be generated automatically.
+* Sometimes when ghost and mysql is booting Ghost is to quick trying to connect to the mysql server and the container crashes.
